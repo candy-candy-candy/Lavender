@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+int max(int x,int y){
+return x>y?x:y;
+}
+char a[MAXN],b[MAXN];
+int carry[MAXN],num[MAXN];
+void complete(char *s,int i,int j){
+int d=j-1,k;
+for(k=i-1;k>=0;k--)
+s[k+d]=s[k];
+for(k=0;k<d;k++)
+s[k]='0';
+}
+int main(){
+scanf("%s%s",a,b);
+int x=strlen(a),y=strlen(b);
+int len=abs(x-y);
+if(x<y)complete(a,x,y);
+else complete(b,y,x);
+int m=max(x,y),i;
+for(i=m-1;i>0;i--){
+num[i]=a[i]+b[i]-96+carry[i];
+if(num[i]>=10){
+num[i]-=10;
+carry[i-1]=1;
+}
+}
+num[0]=a[0]+b[0]-96+carry[0];
+if(num[0]>=10){
+printf("1");
+num[0]-=10;
+}
+for(i=0;i<m;i++)
+printf("%d",num[i]);
+return 0;
+}
